@@ -1,0 +1,107 @@
+{
+  "name": "1_initial",
+  "n_gpu": 1,
+  "preprocessing": {
+    "sr": 22050
+  },
+  "arch": {
+    "type": "FastSpeech2",
+    "args": {
+      "vocab_size": 300,
+      "max_seq_len": 3000,
+      "num_mels": 80,
+      "num_bins": 256,
+      "dropout": 0.1,
+
+      "encoder_dim": 256,
+      "encoder_params": {
+        "conv1d_filter_size": 1024,
+        "n_layers": 4,
+        "head": 2
+      },
+
+      "regulator_params": {
+        "alpha": 1.0,
+        "filter_size": 256,
+        "kernel_size": 3
+      },
+
+      "pitch_params": {
+        "min_bin": 59.91,
+        "max_bin": 887.3,
+        "alpha": 1.0,
+        "predictor_filter_size": 256,
+        "predictor_kernel_size": 3,
+        "dropout": 0.1
+      },
+
+      "energy_params": {
+        "min_bin": 15.02,
+        "max_bin": 91.42,
+        "alpha": 1.0,
+        "predictor_filter_size": 256,
+        "predictor_kernel_size": 3,
+        "dropout": 0.1
+      },
+
+      "fft_params": {
+        "conv1d_kernel": [9, 1],
+        "conv1d_padding": [4, 0]
+      },
+
+      "decoder_dim": 256,
+      "decoder_params": {
+        "conv1d_filter_size": 1024,
+        "n_layers": 4,
+        "head": 2
+      }
+    }
+  },
+  "data": {
+    "train": {
+      "batch_size": 48,
+      "num_workers": 5,
+      "dataset": {
+        "type": "LJSpeechDataset",
+        "args": {}
+      }
+    }
+  },
+  "collator_args": {
+    "batch_expand_dim": 20
+  },
+  "optimizer": {
+    "type": "Adam",
+    "args": {
+      "lr": 1e-3
+    }
+  },
+  "loss": {
+    "type": "FastSpeechLoss",
+    "args": {}
+  },
+  "lr_scheduler": {
+    "type": "OneCycleLR",
+    "args": {
+      "steps_per_epoch": 10000,
+      "epochs": 16,
+      "anneal_strategy": "cos",
+      "max_lr": 1e-3,
+      "pct_start": 0.1
+    }
+  },
+  "trainer": {
+    "epochs": 16,
+    "save_dir": "saved/",
+    "save_period": 1,
+    "verbosity": 2,
+    "monitor": "off",
+    "early_stop": 100,
+    "visualize": "wandb",
+    "wandb_project": "tts_project",
+    "wandb_name": "1_initial",
+    "len_epoch": 10000,
+    "log_step": 500,
+    "grad_norm_clip": 10
+  }
+}
