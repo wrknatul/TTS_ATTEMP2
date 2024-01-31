@@ -1,10 +1,11 @@
 printf "downloading LjSpeech...\n"
-axel -n 8 https://data.keithito.com/data/speech/LJSpeech-1.1.tar.bz2 -q || printf "Failed to load ljspeech\n"
-mkdir data
-tar -xvf LJSpeech-1.1.tar.bz2 >> /dev/null
+# download
+wget http://data.keithito.com/data/speech/LJSpeech-1.1.tar.bz2
+# extract
+tar -xjf LJSpeech-1.1.tar.bz2 >> /dev/null
 mv LJSpeech-1.1 data/LJSpeech-1.1
 
-gdown https://drive.google.com/u/0/uc?id=1-EdH0t0loc6vPiuVtXdhsDtzygWNSNZx || printf "Failed to load train.txt\n"
+gdown https://drive.google.com/file/d/1H46znOFEs4T1eNiOG-diG34dL65AFIFe || printf "Failed to load train.txt\n"
 mv train.txt data/
 
 printf "downloading waveglow...\n"
@@ -19,7 +20,8 @@ echo $(ls mels | wc -l)
 mv mels data/
 
 printf "downloading alignments...\n"
-axel -n 8 https://github.com/xcmyz/FastSpeech/raw/master/alignments.zip || printf "Failed to load alignments\n"
+
+wget https://github.com/xcmyz/FastSpeech/raw/master/alignments.zip
 unzip alignments.zip >> /dev/null
 mv alignments data/
 

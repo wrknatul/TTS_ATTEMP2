@@ -21,7 +21,7 @@ from train import SEED
 from waveglow.inference import get_wav
 from glow import WaveGlow
 
-DEFAULT_CHECKPOINT_PATH = ROOT_PATH / "default_test_model" / "checkpoint.pth"
+DEFAULT_CHECKPOINT_PATH = ROOT_PATH / "model_info" / "checkpoint.pth"
 torch.manual_seed(SEED)
 
 
