@@ -22,9 +22,15 @@ python3 train.py -c tts/configs/train.json
 
 To test my model you may run:
 ```shell
-%%python3 test.py -i default_test_model/text.txt \
-   -r model_info/checkpoint_epoch.pth \
-   -w waveglow/pretrained_model/waveglow_256channels.pt
+bash loader.sh
 ```
-Where -i has text on what we want to test.  -r has direction to checkpoint and you need to add in the same folder config with name config.json. -w is path to waveglow.
-To download model you can take it from https://disk.yandex.ru/d/l2z1dQM1ziFWHQ.
+After downloading waveglow and checkpoint you may run following:
+```shell
+
+python3 test.py -i default_test_model/text.txt \
+   -r model_info/checkpoint_epoch.pth \
+   -w waveglow/pretrained_model/waveglow_256channels.pt \
+   -o output_folder
+```
+Where -i has text on what we want to test.  -r has direction to checkpoint and you need to add in the same folder config with name config.json. -w is path to waveglow -o folder to write a file. You will get on every text wavs with format "{number_of_text}-{alpha}-{beta}-{gamma}.wav".
+To download model you need take it from https://disk.yandex.ru/d/l2z1dQM1ziFWHQ.
